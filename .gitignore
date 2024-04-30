@@ -1,4 +1,10 @@
+.gradle
+voltdbroot/
 target/
+bin/
+classes.jar
+dbin/
+license.xml
 
 .settings
 .project
@@ -10,3 +16,5 @@ target/
 .metals
 .bloop
 
+/.gradle/
+/build/

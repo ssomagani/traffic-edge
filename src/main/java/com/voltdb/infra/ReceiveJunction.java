@@ -1,4 +1,6 @@
-package com.voltdb;
+package com.voltdb.infra;
+
+import com.voltdb.Vehicle;
 
 import akka.actor.typed.Behavior;
 import akka.actor.typed.javadsl.AbstractBehavior;

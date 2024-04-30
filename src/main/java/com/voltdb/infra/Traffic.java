@@ -1,4 +1,6 @@
-package com.voltdb;
+package com.voltdb.infra;
+
+import com.voltdb.Start;
 
 import akka.actor.typed.javadsl.AbstractBehavior;
 import akka.actor.typed.javadsl.ActorContext;

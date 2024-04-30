@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Simulation</title>
+    <style>
+        svg {
+            border: 1px solid black;
+            fill: #000;
+        }
+        .car {
+            fill: #333;
+        }
+        .lane-divider {
+            fill: none;
+            stroke: black;
+            stroke-width: 2;
+            stroke-dasharray: 10;
+        }
+    </style>
+</head>
+<body>
+	<h1>Continuous Intelligence</h1>
+	<h2>A connected car example</h2> 
+
+
+    <svg width="1200" height="100"></svg>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        const roadLength = 1190;
+        const laneWidth = 100;
+        const carRadius = 10;
+        const numCarsPerLane = 3;
+
+        // Generate initial positions for cars in each lane
+        const initialPositionsLane1 = d3.range(numCarsPerLane).map(i => i * (roadLength / numCarsPerLane));
+        const initialPositionsLane2 = d3.range(numCarsPerLane).map(i => i * (roadLength / numCarsPerLane));
+
+        // Generate random speeds for cars in each lane
+        const carSpeedsLane1 = new Array(numCarsPerLane).fill(0).map(() => Math.random() * 0.5 + 1);
+        const carSpeedsLane2 = new Array(numCarsPerLane).fill(0).map(() => Math.random() * 0.5 + 1);
+
+        const svg = d3.select("svg");
+
+        // Append lane divider
+        const laneDivider = svg.append("line")
+            .attr("x1", 0)
+            .attr("y1", 50)
+            .attr("x2", roadLength)
+            .attr("y2", 50)
+            .attr("class", "lane-divider");
+
+        // Append cars in lane 1
+        const carsLane1 = svg.selectAll(".car-lane-1")
+            .data(initialPositionsLane1)
+            .enter()
+            .append("circle")
+            .attr("class", "car car-lane-1")
+            .attr("cx", d => d)
+            .attr("cy", 25) // Adjust y position as needed
+            .attr("r", carRadius);
+
+        // Append cars in lane 2
+        const carsLane2 = svg.selectAll(".car-lane-2")
+            .data(initialPositionsLane2)
+            .enter()
+            .append("circle")
+            .attr("class", "car car-lane-2")
+            .attr("cx", d => d)
+            .attr("cy", 75) // Adjust y position as needed
+            .attr("r", carRadius);
+
+        // Function to update car positions
+        function moveCars() {
+            carsLane1.attr("cx", function(d, i) {
+                const currentX = parseFloat(d3.select(this).attr("cx"));
+                const speed = carSpeedsLane1[i];
+                return (currentX + speed) % (roadLength + 2 * carRadius);
+            });
+            carsLane2.attr("cx", function(d, i) {
+                const currentX = parseFloat(d3.select(this).attr("cx"));
+                const speed = carSpeedsLane2[i];
+                return (currentX + speed) % (roadLength + 2 * carRadius);
+            });
+        }
+
+        // Move cars periodically
+        d3.interval(moveCars, 30);
+        
+    </script>
+    	<h3>Operational Efficiency</h3>
+    	Collected tolls from <b>1784</b> cars in segment 1<br/>
+    	Improved average speed in <b>segment 3</b> 
+    	
+    	<h3>Risk Mitigation</h3>
+    	Reduced speed limit to <b>30kmph</b> in segment 6 due to accident
+    	
+    	<h3>Revenue Generation</h3>
+    	Surge pricing adjusted in <b>segment 5</b>
+</body>
+</html>

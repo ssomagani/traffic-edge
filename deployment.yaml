@@ -1,0 +1,27 @@
+cluster:
+  config:
+    deployment:
+      security:
+        enabled: false
+      topics:
+        enabled: true
+        topic:
+          - name: ping
+            procedure: Ping
+          - name: speed
+      export:
+        configurations:
+          - target: WEBSITE
+            type: file
+            enabled: 'true'
+            properties:
+              type: csv
+              nonce: website
+              period: 60
+          - target: EXECUTOR
+            type: file
+            enabled: 'true'
+            properties:
+              type: csv
+              nonce: executor
+              period: 60

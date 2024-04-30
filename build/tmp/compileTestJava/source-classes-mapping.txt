@@ -1,2 +1,0 @@
-com/example/AkkaQuickstartTest.java
- com.example.AkkaQuickstartTest

@@ -1,0 +1,31 @@
+insert into processed_old_pings
+select 
+    cast(ping['id'] AS INT) AS ID,
+    cast(ping['location'] AS DECIMAL(8,3)) AS LOCATION,
+    cast(ping['sector'] AS INT) AS SECTOR,
+    cast(ping['speed'] AS DECIMAL(7,3)) AS SPEED,
+    cast(ping['ts'] AS TIMESTAMP) AS TS
+from (
+    select 
+        grok(
+            `value`, 
+            '"ID"(:)%{DATA:id}(,)"LOCATION"(:)"%{DATA:location}"(,)"SECTOR"(:)%{DATA:sector},"SPEED"(:)"%{DATA:speed}","TS"(:)"%{TIMESTAMP_ISO8601:TS}"'
+        ) as ping
+    from old_pings
+)
+
+
+    select 
+        grok(
+            `value`, 
+            '"ID"(:)%{DATA:id}(,)"LOCATION"(:)"%{DATA:location}"(,)"SECTOR"(:)%{DATA:sector},"SPEED"(:)"%{DATA:speed}","TS"(:)"%{GREEDYDATA:TS}"'
+        ) as ping
+    from old_pings
+
+    
+insert into windowed_old_pings
+select id, window_start, window_end, count(*) as pings, avg(speed) as speed
+from table(
+    tumble(table processed_old_pings, descriptor(`ts`), interval '10' seconds)
+)
+group by id, window_start, window_end
