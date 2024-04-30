@@ -1,9 +1,9 @@
-#Traffic Edge
+# Traffic Edge
 
-##Run instructions
+## Run instructions
 Install Gradle and simply invoke `gradle run` in this directory
 
-##Functionality
+## Functionality
 
 It's a simple application but how this differs from every other Volt demo application is that there's a feedback loop from the Volt back into the client so that we can demostrate the benefits of Volt's processing power using a completed loop.
 
