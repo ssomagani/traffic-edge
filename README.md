@@ -10,7 +10,8 @@ It's a simple application but how this differs from every other Volt demo applic
 ### Design
 The client application publishes different event streams and also consumes event streams to update its behavior. Specifically, the vehicles emit PING events (one event per second) about their location, speed, and other metadata. The vehicles can also consume events that give them the target speed to adjust themselves to. 
 
-**Road** ---creates--> **Vehicles** ---emit events--> Volt ---aggregates, processes, emits events --> **Archive**
+**Road** ---creates--> **Vehicles** ---emit events--> **Volt** ---aggregates, processes, emits events --> **Archive**
+**Vehicles** ---emit events--> **Volt** ---emits events--> **Vehicles**
 
 ### Client 
 
